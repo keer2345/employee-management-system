@@ -1,4 +1,4 @@
-package com.dailycodebuffer.employee.config;
+package com.dailycodebuffer.common.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import lombok.Getter;
