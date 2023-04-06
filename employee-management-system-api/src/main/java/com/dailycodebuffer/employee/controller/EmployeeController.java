@@ -3,7 +3,7 @@ package com.dailycodebuffer.employee.controller;
 import com.dailycodebuffer.employee.model.Employee;
 import com.dailycodebuffer.employee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;import java.util.List;
+import org.springframework.http.ResponseEntity;import org.springframework.web.bind.annotation.*;import java.util.HashMap;import java.util.List;import java.util.Map;
 
 /**
  * Employee Controller
@@ -19,11 +19,20 @@ public class EmployeeController {
 
   @PostMapping
   public Employee createEmployee(@RequestBody Employee employee) {
-    return employeeService.createEmployee(employee);
+    return  employeeService.createEmployee(employee);
   }
 
   @GetMapping
   public List<Employee> getAllEmployees(){
     return employeeService.getAllEmployees();
+  }
+
+  @DeleteMapping("{id}")
+  public ResponseEntity<Map<String,Boolean>> deleteEmployee(@PathVariable Long id){
+    boolean deleted = false;
+    deleted = employeeService.deleteEmployee(id);
+   Map<String,Boolean> response = new HashMap<>();
+   response.put("deleted", deleted);
+   return ResponseEntity.ok(response);
   }
 }
