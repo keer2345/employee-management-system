@@ -21,10 +21,24 @@ public interface EmployeeService {
    */
   List<Employee> getAllEmployees();
   /**
-   * delete employee
+   * delete employee by id
    *
    * @param id
    * @return
    */
   boolean deleteEmployee(Long id);
-}
+
+  /**
+   * get employee by id
+   *
+   * @param id
+   * @return
+   */
+  Employee getEmployeeById(Long id);
+
+  /**
+   * update employee
+   * @param employee
+   * @return
+   */
+  Employee updateEmployee(Employee employee);}

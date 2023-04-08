@@ -1,6 +1,7 @@
 package com.dailycodebuffer.employee.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import com.dailycodebuffer.employee.entity.EmployeeEntity;
 import com.dailycodebuffer.employee.model.Employee;
 import com.dailycodebuffer.employee.repository.EmployeeRepository;
@@ -44,5 +45,29 @@ public class EmployeeServiceImpl implements EmployeeService {
     EmployeeEntity employeeEntity = employeeRepository.findById(id).get();
     employeeRepository.delete(employeeEntity);
     return true;
+  }
+
+  @Override
+  public Employee getEmployeeById(Long id) {
+    EmployeeEntity employeeEntity = employeeRepository.findById(id).get();
+    Employee employee = new Employee();
+    BeanUtil.copyProperties(employeeEntity, employee);
+    return employee;
+  }
+
+  @Override
+  public Employee updateEmployee(Employee employee) {
+    EmployeeEntity employeeEntity = employeeRepository.findById(employee.getId()).get();
+
+    BeanUtil.copyProperties(
+        employee,
+        employeeEntity,
+        CopyOptions.create().setIgnoreNullValue(true).setIgnoreError(true));
+    employeeRepository.save(employeeEntity);
+
+    Employee newEmployee = new Employee();
+    BeanUtil.copyProperties(employeeEntity, newEmployee);
+
+    return newEmployee;
   }
 }
